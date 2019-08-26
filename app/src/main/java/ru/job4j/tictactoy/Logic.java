@@ -1,28 +1,33 @@
 package ru.job4j.tictactoy;
 
-import android.os.Build;
-import android.widget.Button;
-
 import java.util.List;
 
 
 public class Logic {
-    private final List<Button> table;
+    private final List<String> table;
     private final String[] mark;
     private final int size;
 
 
-    public Logic(List<Button> buttons, String[] mark) {
-        this.table = buttons;
-        this.size = (int) Math.sqrt(buttons.size());
+    public Logic(List<String> table, String[] mark) {
+        this.table = table;
+        this.size = (int) Math.sqrt(table.size());
         this.mark = mark;
     }
 
+    public int getMove(){
+        while (true) {
+            int rnd = (int) (8 * Math.random());
+            if (this.table.get(rnd).equals("")) {
+                return rnd;
+            }
+        }
+    }
 
     public boolean hasGap() {
         boolean result = false;
-        for (Button button : table) {
-            if (!button.getText().toString().equals(mark[0]) && !button.getText().toString().equals(mark[1])) {
+        for (String value : table) {
+            if (!value.equals(mark[0]) && !value.equals(mark[1])) {
                 result = true;
                 break;
             }
@@ -33,8 +38,8 @@ public class Logic {
     public boolean fillBy(String mark, int startX, int startY, int deltaX, int deltaY) {
         boolean result = true;
         for (int index = 0; index != this.size; index++) {
-            Button button = this.table.get(startX + this.size * startY);
-            if (!button.getText().toString().equals(mark)) {
+            String value = this.table.get(startX + this.size * startY);
+            if (!value.equals(mark)) {
                 result = false;
                 break;
             }
